@@ -12,8 +12,10 @@ jest.mock('./index', () => {
 });
 
 describe('partial mocking', () => {
+  let consoleLogSpy: jest.SpyInstance;
+
   beforeEach(() => {
-    jest.spyOn(console, 'log').mockImplementation();
+    consoleLogSpy = jest.spyOn(console, 'log');
   });
 
   afterEach(() => {
@@ -28,11 +30,11 @@ describe('partial mocking', () => {
     mockOne();
     mockTwo();
     mockThree();
-    expect(console.log).not.toHaveBeenCalled();
+    expect(consoleLogSpy).not.toHaveBeenCalled();
   });
 
   test('unmockedFunction should log into console', () => {
     unmockedFunction();
-    expect(console.log).toHaveBeenCalledWith('I am not mocked');
+    expect(consoleLogSpy).toHaveBeenCalledWith('I am not mocked');
   });
 });
